@@ -24,6 +24,10 @@ public class DistanceConverter implements MeasureConverter{
         return String.valueOf(conversion);
     }
 
+    public String getMeasure() {
+        return "Distance";
+    }
+
     public static void main(String[] args) {
         System.out.println(new DistanceConverter().convert("Meter", "Kilometer", 5.0));
     }
