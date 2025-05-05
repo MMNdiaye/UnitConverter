@@ -1,0 +1,95 @@
+package sn.ndiaye.uconverter.views;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class ConverterGUI extends JFrame {
+    // variable components
+    private JComboBox<String> measureSelect;
+    private JTextField toConvertInput;
+    private JComboBox<String> unit1Select;
+    private JComboBox<String> unit2Select;
+    private JTextField convertedOutput;
+
+    //label components
+    private JLabel measureLabel;
+    private JLabel toConvertLabel;
+    private JLabel unit1Label;
+    private JLabel unit2Label;
+    private JLabel convertedLabel;
+
+    private JButton convertButton;
+
+    public ConverterGUI() {
+        setTitle("Converter");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        initComponents();
+        JPanel mainPanel = new JPanel(new GridLayout(3, 1, 0, 10));
+        mainPanel.add(new TopPanel());
+        mainPanel.add(new BottomPanel());
+        mainPanel.add(convertButton);
+        add(mainPanel);
+        pack();
+        setVisible(true);
+    }
+
+    private void initComponents() {
+        // variable components
+        measureSelect = new JComboBox<>();
+        toConvertInput = new JTextField();
+        unit1Select = new JComboBox<>();
+        unit2Select = new JComboBox<>();
+        convertedOutput = new JTextField();
+
+        //label components
+        measureLabel = new JLabel("Measure:");
+        toConvertLabel = new JLabel("Value:");
+        unit1Label = new JLabel("Unit:");
+        unit2Label = new JLabel("Unit:");
+        convertedLabel = new JLabel("Result:");
+
+        convertButton = new JButton("Convert");
+    }
+
+    class TopPanel extends JPanel {
+        TopPanel() {
+            setLayout(new GridLayout(1, 2));
+            add(measureLabel);
+            add(measureSelect);
+        }
+    }
+
+    class BottomPanel extends JPanel {
+        BottomPanel() {
+            setLayout(new GridLayout(2, 6));
+            // grid management
+            JComponent[][] components = new JComponent[2][6];
+            // to convert part:
+            components[1][0] = toConvertLabel;
+            components[1][1] = toConvertInput;
+            components[0][2] = unit1Label;
+            components[1][2] = unit1Select;
+           // converted part:
+            components[1][3] = convertedLabel;
+            components[1][4] = convertedOutput;
+            components[0][5] = unit2Label;
+            components[1][5] = unit2Select;
+
+            // adding
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 6 ; j++) {
+                    if (components[i][j] == null)
+                        add(new JPanel());
+                    else
+                        add(components[i][j]);
+                }
+            }
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+        new ConverterGUI();
+    }
+}
