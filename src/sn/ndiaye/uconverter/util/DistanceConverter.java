@@ -20,7 +20,7 @@ public class DistanceConverter implements MeasureConverter{
     public String convert(String unit1, String unit2, Double value) {
         BigDecimal scale1 = BigDecimal.valueOf(scales.get(unit1));
         BigDecimal scale2 = BigDecimal.valueOf(scales.get(unit2));
-        BigDecimal unitRatio = scale1.divide(scale2, MathContext.DECIMAL32);
+        BigDecimal unitRatio = scale1.divide(scale2);
         BigDecimal conversion = BigDecimal.valueOf(value).multiply(unitRatio);
         return String.valueOf(conversion);
     }
