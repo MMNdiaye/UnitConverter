@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import java.util.Set;
 
 public class DistanceConverter implements MeasureConverter{
     private final static double DEFAULT_SCALE = 1; // We consider the default scale to be 1km
@@ -26,6 +27,10 @@ public class DistanceConverter implements MeasureConverter{
 
     public String getMeasure() {
         return "Distance";
+    }
+
+    public Set<String> getUnits() {
+        return scales.keySet();
     }
 
     public static void main(String[] args) {

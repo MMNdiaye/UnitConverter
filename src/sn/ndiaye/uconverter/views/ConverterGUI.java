@@ -1,9 +1,13 @@
 package sn.ndiaye.uconverter.views;
 
+import sn.ndiaye.uconverter.logic.Manager;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
 
 public class ConverterGUI extends JFrame {
+    private Manager manager;
     // variable components
     private JComboBox<String> measureSelect;
     private JTextField toConvertInput;
@@ -20,7 +24,8 @@ public class ConverterGUI extends JFrame {
 
     private JButton convertButton;
 
-    public ConverterGUI() {
+    public ConverterGUI(Manager manager) {
+        this.manager = manager;
         setTitle("Converter");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
@@ -40,6 +45,7 @@ public class ConverterGUI extends JFrame {
         unit1Select = new JComboBox<>();
         unit2Select = new JComboBox<>();
         convertedOutput = new JTextField();
+        initFillVariableComponents();
 
         //label components
         measureLabel = new JLabel("Measure:");
@@ -49,6 +55,17 @@ public class ConverterGUI extends JFrame {
         convertedLabel = new JLabel("Result:");
 
         convertButton = new JButton("Convert");
+    }
+
+    private void initFillVariableComponents() {
+        for (String measure : manager.getMeasures())
+            measureSelect.addItem(measure);
+        for (String unit : manager.getConverterUnits()) {
+            unit1Select.addItem(unit);
+            unit2Select.addItem(unit);
+        }
+        unit1Select.setSelectedIndex(0);
+        unit2Select.setSelectedIndex(1);
     }
 
     class TopPanel extends JPanel {
@@ -87,9 +104,4 @@ public class ConverterGUI extends JFrame {
         }
     }
 
-
-
-    public static void main(String[] args) {
-        new ConverterGUI();
-    }
 }
