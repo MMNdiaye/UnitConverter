@@ -38,7 +38,4 @@ public class Manager {
             converter = converters.get(measure);
     }
 
-    public static void main(String[] args) {
-        Manager manager = new Manager();
-    }
 }
