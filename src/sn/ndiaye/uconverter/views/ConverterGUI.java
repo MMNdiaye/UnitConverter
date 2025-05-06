@@ -4,12 +4,14 @@ import sn.ndiaye.uconverter.logic.Manager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Set;
 
 public class ConverterGUI extends JFrame {
     private Manager manager;
-    // variable components
     private JComboBox<String> measureSelect;
+    // variable components
     private JTextField toConvertInput;
     private JComboBox<String> unit1Select;
     private JComboBox<String> unit2Select;
@@ -29,6 +31,7 @@ public class ConverterGUI extends JFrame {
         setTitle("Converter");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
+        activateListeners();
         JPanel mainPanel = new JPanel(new GridLayout(3, 1, 0, 10));
         mainPanel.add(new TopPanel());
         mainPanel.add(new BottomPanel());
@@ -41,11 +44,13 @@ public class ConverterGUI extends JFrame {
     private void initComponents() {
         // variable components
         measureSelect = new JComboBox<>();
+        for (String measure : manager.getMeasures())
+            measureSelect.addItem(measure);
         toConvertInput = new JTextField();
         unit1Select = new JComboBox<>();
         unit2Select = new JComboBox<>();
+        fillVariableComponents();
         convertedOutput = new JTextField();
-        initFillVariableComponents();
 
         //label components
         measureLabel = new JLabel("Measure:");
@@ -57,9 +62,7 @@ public class ConverterGUI extends JFrame {
         convertButton = new JButton("Convert");
     }
 
-    private void initFillVariableComponents() {
-        for (String measure : manager.getMeasures())
-            measureSelect.addItem(measure);
+    private void fillVariableComponents() {
         for (String unit : manager.getConverterUnits()) {
             unit1Select.addItem(unit);
             unit2Select.addItem(unit);
@@ -67,6 +70,29 @@ public class ConverterGUI extends JFrame {
         unit1Select.setSelectedIndex(0);
         unit2Select.setSelectedIndex(1);
     }
+
+    private void resetVariableComponents() {
+        unit1Select.removeAllItems();
+        unit2Select.removeAllItems();
+        fillVariableComponents();
+    }
+
+    private void activateListeners() {
+        measureSelect.addActionListener((ActionEvent e) -> {
+            manager.setConverter(measureSelect.getItemAt(
+                    measureSelect.getSelectedIndex()));
+            resetVariableComponents();
+        });
+
+        convertButton.addActionListener((ActionEvent e) -> {
+            String measure = measureSelect.getItemAt(measureSelect.getSelectedIndex());
+            String unit1 = unit1Select.getItemAt(unit1Select.getSelectedIndex());
+            String unit2 = unit2Select.getItemAt(unit2Select.getSelectedIndex());
+            String value = (toConvertInput != null) ? toConvertInput.getText() : "0";
+            convertedOutput.setText(manager.process(measure, unit1, unit2, value));
+        });
+    }
+
 
     class TopPanel extends JPanel {
         TopPanel() {
@@ -93,15 +119,15 @@ public class ConverterGUI extends JFrame {
             components[1][5] = unit2Select;
 
             // adding
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 2; i++)
                 for (int j = 0; j < 6 ; j++) {
                     if (components[i][j] == null)
                         add(new JPanel());
                     else
                         add(components[i][j]);
                 }
-            }
         }
     }
+
 
 }

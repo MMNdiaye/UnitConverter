@@ -20,8 +20,6 @@ public class Manager {
     }
 
     public String process(String measure, String unit1, String unit2, String input) {
-        if (!converter.getMeasure().equals(measure))
-            converter = converters.get(measure);
         return converter.convert(unit1, unit2, Double.valueOf(input));
     }
 
@@ -33,10 +31,12 @@ public class Manager {
         return converters.get(converter.getMeasure()).getUnits();
     }
 
+    public void setConverter(String measure) {
+        if (converters.containsKey(measure))
+            converter = converters.get(measure);
+    }
+
     public static void main(String[] args) {
         Manager manager = new Manager();
-        String output = manager.process("Distance",
-                "Kilometer", "Meter", "12.6");
-        System.out.println(output);
     }
 }
