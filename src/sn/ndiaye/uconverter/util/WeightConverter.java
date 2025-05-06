@@ -2,19 +2,20 @@ package sn.ndiaye.uconverter.util;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Set;
 
-public class DistanceConverter implements MeasureConverter{
-    private final static double DEFAULT_SCALE = 1; // We consider the default scale to be 1 meter
-    private final static double KILOMETER_SCALE =  DEFAULT_SCALE * 1000;
-    private final static double METER_SCALE = DEFAULT_SCALE * 1;
+public class WeightConverter implements MeasureConverter{
+    private final static double DEFAULT_SCALE = 1; // We consider the default scale to be 1 kilogram
+    private final static double GRAM_SCALE =  DEFAULT_SCALE * 0.001;
+    private final static double KILOGRAM_SCALE = DEFAULT_SCALE * 1;
+    private final static double POUND_SCALE = DEFAULT_SCALE * 0.4535924;
     private final static HashMap<String, Double> scales;
     static {
         scales = new HashMap<>();
-        scales.put("Kilometer", KILOMETER_SCALE);
-        scales.put("Meter", METER_SCALE);
+        scales.put("Gram", GRAM_SCALE);
+        scales.put("Kilogram", KILOGRAM_SCALE);
+        scales.put("Pound", POUND_SCALE);
     }
 
     public String convert(String unit1, String unit2, Double value) {
@@ -25,12 +26,13 @@ public class DistanceConverter implements MeasureConverter{
         return String.valueOf(conversion);
     }
 
+
     public String getMeasure() {
-        return "Distance";
+        return "Weight";
     }
+
 
     public Set<String> getUnits() {
         return scales.keySet();
     }
-
 }

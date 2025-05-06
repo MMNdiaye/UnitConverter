@@ -5,6 +5,7 @@ import java.util.Set;
 
 import sn.ndiaye.uconverter.util.DistanceConverter;
 import sn.ndiaye.uconverter.util.MeasureConverter;
+import sn.ndiaye.uconverter.util.WeightConverter;
 import sn.ndiaye.uconverter.views.ConverterGUI;
 
 public class Manager {
@@ -15,6 +16,7 @@ public class Manager {
     public Manager() {
         converters = new HashMap<>();
         converters.put("Distance", new DistanceConverter());
+        converters.put("Weight", new WeightConverter());
         converter = converters.get("Distance");
         this.gUI = new ConverterGUI(this);
     }
