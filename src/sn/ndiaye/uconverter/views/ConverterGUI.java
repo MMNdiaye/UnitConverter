@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Set;
 
 public class ConverterGUI extends JFrame {
@@ -51,6 +53,7 @@ public class ConverterGUI extends JFrame {
         unit2Select = new JComboBox<>();
         fillVariableComponents();
         convertedOutput = new JTextField();
+        convertedOutput.setEditable(false);
 
         //label components
         measureLabel = new JLabel("Measure:");
@@ -89,7 +92,9 @@ public class ConverterGUI extends JFrame {
             String unit1 = unit1Select.getItemAt(unit1Select.getSelectedIndex());
             String unit2 = unit2Select.getItemAt(unit2Select.getSelectedIndex());
             String value = (toConvertInput != null) ? toConvertInput.getText() : "0";
-            convertedOutput.setText(manager.process(measure, unit1, unit2, value));
+            Double result = Double.valueOf(manager.process(measure, unit1, unit2, value));
+            convertedOutput.setText(NumberFormat.
+                    getNumberInstance(Locale.US).format(result));
         });
     }
 
